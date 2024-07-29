@@ -10,22 +10,39 @@
     <link rel="stylesheet" href="./style/fonts.css" />
     <link rel="stylesheet" href="./style/standard.css" />
     <link rel="stylesheet" href="./style/assets.css" />
+    <link rel="stylesheet" href="./style/media.css" />
 
     <script src="./scripts/assets.js"></script>
     <script src="./scripts/templates.js"></script>
     <script src="./script.js"></script>
-    </head>
+  </head>
 
   <body onload="init()">
     <header>
       <h1>My Pokédex</h1>
       <div class="searchbox">
-        <input id="search_pokemon" type="text" placeholder="Search your Pokémon">
+        <input
+          id="search_pokemon"
+          type="text"
+          placeholder="Search your Pokémon"
+        />
         <button id="search_button">Search</button>
       </div>
     </header>
 
-    
-   
+    <section class="content">
+      <div class="pokemon-card">
+
+        <div class="pokemon-card-above">
+          <img src="./assets/img/pokeball.png" alt="" class="pokemon-img">
+        </div>
+
+        <div class="pokemon-description">
+          <h2>Ditto</h2>
+          <p>Description</p>
+        </div>
+
+      </div>
+    </section>
   </body>
 </html>

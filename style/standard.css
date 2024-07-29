@@ -11,9 +11,10 @@ html {
 body {
   font-family: "Livvic", normal;
   height: 100%;
+  background-color: #f9f9f9;
 }
 
-header{
+header {
   max-width: 1440px;
   margin: auto;
   padding: 8px;
@@ -23,24 +24,35 @@ header{
   gap: 24px;
 }
 
-h1{
-  color: rgb(254,202,27);
+h1 {
+  color: rgb(254, 202, 27);
   font-size: 64px;
   font-weight: 900;
   -webkit-text-stroke: 5px rgb(61, 125, 202);
+}
+
+h2{
+  margin: 0px;
 }
 
 a {
   text-decoration: none;
 }
 
-.impressum{
+.impressum {
   padding: 80px;
 }
 
 .content {
-  padding-inline: 80px;
-  padding-block: 48px;
+  max-width: 1440px;
+  margin: auto;
+  padding-inline: 8px;
+  padding-top: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 
 .d-none {
