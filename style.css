@@ -1,4 +1,3 @@
-body {
-  font-family: "Livvic", normal;
-  height: 100%;
+.searchbox {
+  display: flex;
 }

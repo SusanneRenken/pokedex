@@ -8,26 +8,39 @@ html {
   height: 100%;
 }
 
+body {
+  font-family: "Livvic", normal;
+  height: 100%;
+}
+
+header{
+  max-width: 1440px;
+  margin: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+h1{
+  color: rgb(254,202,27);
+  font-size: 64px;
+  font-weight: 900;
+  -webkit-text-stroke: 5px rgb(61, 125, 202);
+}
+
 a {
   text-decoration: none;
 }
 
 .impressum{
-  margin: 80px;
+  padding: 80px;
 }
 
 .content {
   padding-inline: 80px;
   padding-block: 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-@media (max-width: 730px) {
-  .content {
-    margin-left: 72px;
-  }
 }
 
 .d-none {
