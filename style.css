@@ -24,9 +24,9 @@
 }
 
 .pokemon-img {
-  height: 80px;
+  height: 100px;
   position: absolute;
-  bottom: -8px;
+  bottom: -12px;
 }
 
 .pokemon-description {
