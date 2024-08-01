@@ -1,21 +1,28 @@
-button{
-    background-color: rgb(61, 125, 202);
-    width: 80px;
-    border: 0px;
-    border-radius: 0 6px 6px 0;
-    font-size: 16px;
-    color: white;
-    padding: 10px 10px;
-    text-decoration: none;
+.searchBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1),
+    -10px -10px 10px white;
+  }
+  
+  .searchBox input {
+    border-radius: 8px 0 0 8px;
+    border: 0;
+    outline: none;
+    height: 36px;
+    padding: 4px 16px;
+    background-color: white;
+    color: #000;
+  }
+  
+  .searchBox button {
     cursor: pointer;
-    transition: 0.075 linear;
-}
-
-input{
-    font-size: 16px;
-    padding: 8px;
-    width: 240px;
-    border: 1px solid rgb(170, 170, 170, 0.5);
-    border-radius: 6px 0 0 6px;
-
-}
+    border-radius: 0 8px 8px 0;
+    border: 0;
+    height: 36px;
+    padding: 4px 16px;
+    background-color: white;
+  }
