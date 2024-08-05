@@ -11,7 +11,7 @@ html {
 body {
   font-family: "Livvic", normal;
   height: 100%;
-  background-color: rgb(249, 249, 249);
+  background-color: rgb(240, 240, 240);
 }
 
 header {
@@ -26,7 +26,7 @@ header {
 
 h1 {
   /* color: rgb(254, 202, 27); */
-  color: white;
+  color: rgba(61, 125, 202, 0.2);
   font-size: 64px;
   font-weight: 900;
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1) ,
