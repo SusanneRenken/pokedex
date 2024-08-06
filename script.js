@@ -1,39 +1,55 @@
-let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=3&offset=0&language=de";
-let loadPokemons;
-let numberPokemons;
-let pokeImages = [
-  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
-  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
-];
+let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=9&offset=0&language=de";
+let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
+let CHARACTERISTIC_URL = "https://pokeapi.co/api/v2/characteristic/";
+let language = "de";
 
 async function init() {
-  loadPokemons = await fetchDataJason(BASE_URL);
-  console.log("Geladene Pokémon außerhalb der Funktion:", loadPokemons);
-  numberPokemons = loadPokemons.results.length;
-  console.log("Anzahl der geladene Pokémon:", numberPokemons);
-  renderPokemon();
+  let content = document.getElementById("pokemon_cards");
+  content.innerHTML = "";
+  let pokemonList = await fetchDataJason(BASE_URL);
+  console.log("Geladene Pokémon außerhalb der Funktion:", pokemonList);
+
+  renderPokemon(pokemonList, content);
 }
 
 async function fetchDataJason(apiUrl) {
   try {
     let response = await fetch(apiUrl);
     let data = await response.json();
-    console.log("Daten in der Funktion:", data);
     return data;
   } catch (error) {
     console.error("Fehler beim Abrufen der Daten:", error);
   }
 }
 
-async function renderPokemon() {
-  let content = document.getElementById("pokemon_cards");
-  content.innerHTML = "";
+async function getGermanName(pokemonId) {
+  let speciesData = await fetchDataJason(`${SPECIES_URL}${pokemonId}`);
+  let germanName = speciesData.names.find(
+    (name) => name.language.name === language
+  ).name;
+  return germanName;
+}
 
-  for (let index = 0; index < numberPokemons; index++) {
-    const image = pokeImages[index];
-    const name = loadPokemons.results[index].name;
-    let capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
-    content.innerHTML += PokemonCardHTML(image, capitalizedName);
+async function getDescription(pokemonId) {
+  let characteristicData = await fetchDataJason(`${CHARACTERISTIC_URL}${pokemonId}`);
+  let theDescription = characteristicData.descriptions.find(
+    (name) => name.language.name === language
+  ).description;
+  return theDescription;
+}
+
+async function renderPokemon(pokemonList, content) {
+  for (let pokemon of pokemonList.results) {
+    let pokemonData = await fetchDataJason(pokemon.url);
+    let image = pokemonData.sprites.other["official-artwork"].front_default;
+    let germanName = await getGermanName(pokemonData.id);
+    let description = await getDescription(pokemonData.id);
+
+    content.innerHTML += PokemonCardHTML(
+      image,
+      germanName,
+      pokemonData.id,
+      description
+    );
   }
 }

@@ -16,6 +16,7 @@ body {
 
 header {
   max-width: 1440px;
+  height: 160px;
   margin: auto;
   padding: 8px;
   display: flex;
@@ -24,18 +25,21 @@ header {
   gap: 24px;
 }
 
+footer {
+  height: 80px;
+  margin-top: 24px;
+  background-image: linear-gradient(to top, rgba(61, 125, 202, 0.2), rgb(240, 240, 240));
+}
+
 h1 {
-  /* color: rgb(254, 202, 27); */
   color: rgba(61, 125, 202, 0.2);
   font-size: 64px;
   font-weight: 900;
-  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1) ,
-  -4px -4px 4px white;
-    -webkit-text-stroke: 0.5px rgba(61, 125, 202, 0.8);
-  /* -webkit-text-stroke: 5px rgb(61, 125, 202); */
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1), -4px -4px 4px white;
+  -webkit-text-stroke: 0.5px rgba(61, 125, 202, 0.8);
 }
 
-h2{
+h2 {
   margin: 0px;
 }
 
@@ -49,13 +53,13 @@ a {
 
 .content {
   max-width: 1440px;
+  min-height: calc(100vh - 264px);
   margin: auto;
   padding-inline: 8px;
   padding-top: 48px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   gap: 32px;
 }
 

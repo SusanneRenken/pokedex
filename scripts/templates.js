@@ -1,4 +1,4 @@
-function PokemonCardHTML(image, name) {
+function PokemonCardHTML(image, name, id, description) {
   return `
     <div class="pokemon-card">
 
@@ -8,7 +8,8 @@ function PokemonCardHTML(image, name) {
 
         <div class="pokemon-description">
           <h2>${name}</h2>
-          <p>Description</p>
+          <p># ${id}</p>
+          <p>${description}</p>
         </div>
 
     </div>`;
