@@ -3,37 +3,37 @@
     font-size: 16px;
   }
   p {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .pokemon-card {
-    width: 180px;
-    height: 210px;
+    width: 170px;
+    height: 220px;
   }
 
   .pokemon-circle {
     height: 140px;
     width: 140px;
-    bottom: 75px;
+    bottom: 64px;
   }
 
   .pokemon-description {
-    height: 110px;
+    height: 100px;
   }
 
   .pokemon-img {
-    height: 75px;
-    width: 75px;
-    bottom: 110px;
+    height: 72px;
+    width: 72px;
+    bottom: 100px;
   }
 
   .pokemon-types {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .type {
     padding: 3px;
-    width: 50px;
+    width: 56px;
   }
 }
 

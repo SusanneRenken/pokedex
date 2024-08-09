@@ -1,4 +1,5 @@
-let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=9git &offset=0";
+let loadPokemons = 150;
+let BASE_URL = `https://pokeapi.co/api/v2/pokemon?limit=${loadPokemons}git &offset=0`;
 let POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
 let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 let TYPE_URL = "https://pokeapi.co/api/v2/type/";
@@ -42,8 +43,8 @@ async function renderPokemon(pokemonList, content) {
   }
 }
 
-async function getlanguageName(languageId) {
-  let speciesData = await fetchDataJason(`${SPECIES_URL}${languageId}`);
+async function getlanguageName(Id) {
+  let speciesData = await fetchDataJason(`${SPECIES_URL}${Id}`);
   let languageName = speciesData.names.find(
     (name) => name.language.name === language
   ).name;
@@ -55,7 +56,16 @@ async function renderTypes(pokemonData, id) {
 
   for (let pokemonTypes of pokemonData.types) {
     let pokemonType = pokemonTypes.type.name;
+    let languageType = await getlanguageId(pokemonTypes.type.url);
     // console.log("PokeType:", pokemonType);
-    content.innerHTML += `<span class="type ${pokemonType}">${pokemonType}</span>`;
+    content.innerHTML += `<span class="type ${pokemonType}">${languageType}</span>`;
   }
+}
+
+async function getlanguageId(Url) {
+  let typeData = await fetchDataJason(Url);
+  let languageType = typeData.names.find(
+    (name) => name.language.name === language
+  ).name;
+  return languageType;
 }
