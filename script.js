@@ -1,18 +1,24 @@
-let loadPokemons = 150;
-let BASE_URL = `https://pokeapi.co/api/v2/pokemon?limit=${loadPokemons}git &offset=0`;
+let loadedPokemons = 0;
+const pokemonsPerLoad = 5;
 let POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
 let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 let TYPE_URL = "https://pokeapi.co/api/v2/type/";
 let STAT_URL = "https://pokeapi.co/api/v2/stat/";
-let language = "de";
+let language = "en";
 
 async function init() {
   let content = document.getElementById("pokemon_cards");
   content.innerHTML = "";
-  let pokemonList = await fetchDataJason(BASE_URL);
-  // console.log("Geladene Pokémon außerhalb der Funktion:", pokemonList);
+  await loadMorePokemon();
+}
 
-  renderPokemon(pokemonList, content);
+async function loadMorePokemon() {
+  let content = document.getElementById("pokemon_cards");
+  let pokemonList = await fetchDataJason(`https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`);
+  
+  await renderPokemon(pokemonList, content);
+  
+  loadedPokemons += pokemonsPerLoad;
 }
 
 async function fetchDataJason(apiUrl) {
@@ -38,7 +44,7 @@ async function renderPokemon(pokemonList, content) {
       pokemonData.id,
       pokemonMainType
     );
-    // console.log("PokeName:", languageName);
+
     renderTypes(pokemonData, pokemonData.id);
   }
 }
@@ -57,7 +63,7 @@ async function renderTypes(pokemonData, id) {
   for (let pokemonTypes of pokemonData.types) {
     let pokemonType = pokemonTypes.type.name;
     let languageType = await getlanguageId(pokemonTypes.type.url);
-    // console.log("PokeType:", pokemonType);
+
     content.innerHTML += `<span class="type ${pokemonType}">${languageType}</span>`;
   }
 }

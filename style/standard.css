@@ -29,11 +29,11 @@ header {
 footer {
   height: 80px;
   margin-top: 24px;
-  background-image: linear-gradient(to top, rgba(61, 125, 202, 0.2), rgb(240, 240, 240));
+  background-image: linear-gradient(to top, rgba(61, 125, 202, 0.3), rgb(240, 240, 240));
 }
 
 h1 {
-  color: rgba(61, 125, 202, 0.2);
+  color: rgba(61, 125, 202, 0.3);
   font-size: 64px;
   font-weight: 900;
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1), -4px -4px 4px white;
@@ -54,7 +54,7 @@ a {
 
 .content {
   max-width: 1440px;
-  min-height: calc(100vh - 264px);
+  min-height: calc(100vh - 264px - 100px);
   margin: auto;
   padding-inline: 8px;
   padding-top: 48px;
@@ -62,6 +62,13 @@ a {
   flex-wrap: wrap;
   justify-content: center;
   gap: 32px;
+}
+
+.load-Btn-content {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
 }
 
 .d-none {
