@@ -1,4 +1,4 @@
-let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0";
+let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
 let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 let STAT_URL = "https://pokeapi.co/api/v2/stat/";
 let CHARACTERISTIC_URL = "https://pokeapi.co/api/v2/characteristic/";

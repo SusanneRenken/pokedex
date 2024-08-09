@@ -4,7 +4,7 @@ function PokemonCardHTML(image, name, id) {
 
         <img src=${image} alt="" class="pokemon-img"/>
 
-        <div class="pokemon-circle"></div>
+        <div class="pokemon-circle steel"></div>
 
         <div class="pokemon-description">
           <h2>${name}</h2>
