@@ -1,4 +1,4 @@
-let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=50&offset=0";
+let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=50git &offset=0";
 let POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
 let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 let STAT_URL = "https://pokeapi.co/api/v2/stat/";
@@ -30,8 +30,6 @@ async function renderPokemon(pokemonList, content) {
     let germanName = await getGermanName(pokemonData.id);
     let pokemonType = await getPokemonType(pokemonData.id);
 
-    // let description = await getDescription(pokemonData.id);
-
     content.innerHTML += PokemonCardHTML(
       image,
       germanName,
@@ -52,25 +50,6 @@ async function getGermanName(pokemonId) {
 async function getPokemonType(pokemonId) {
   let pokemonData = await fetchDataJason(`${POKEMON_URL}${pokemonId}`);
   let pokemonType = pokemonData.types["0"].type.name;
-  console.log("Poketype:", pokemonType);
   return pokemonType;
 }
-
-
-// async function getDescription(pokemonId) {
-//     let characteristicData = await fetchDataJason(`${CHARACTERISTIC_URL}`);
-    
-//     // Finde die passende Charakteristik für das Pokémon
-//     let pokemonCharacteristic = characteristicData.find(char => char.pokemon_id === pokemonId);
-    
-//     if (!pokemonCharacteristic) {
-//       return "Keine Beschreibung verfügbar.";
-//     }
-    
-//     // Finde die deutsche Beschreibung
-//     let description = pokemonCharacteristic.descriptions.find(desc => desc.language.name === "de");
-    
-//     return description ? description.description : "Keine deutsche Beschreibung verfügbar.";
-//   }
-
 

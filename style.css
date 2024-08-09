@@ -3,7 +3,7 @@
 }
 
 .pokemon-card {
-  cursor: pointer;
+  cursor: url('./assets/img/mouse-highlight.png'), auto;
   position: relative;
   width: 240px;
   height: 280px;
@@ -40,6 +40,20 @@
   position: absolute;
   bottom: 120px;
   z-index: 802;
+}
+
+.pokemon-types{
+  padding-top: 8px;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.type{
+  padding: 4px;
+  border-radius: 4px;
+  width: 57px;
 }
 
 .fighting{

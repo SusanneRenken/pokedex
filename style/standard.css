@@ -12,6 +12,7 @@ body {
   font-family: "Livvic", normal;
   height: 100%;
   background-color: rgb(240, 240, 240);
+  cursor: url('../assets/img/mouse-pointer.png'), auto;
 }
 
 header {
