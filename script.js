@@ -10,7 +10,7 @@ async function init() {
   content.innerHTML = "";
   let pokemonList = await fetchDataJason(BASE_URL);
   console.log("Geladene Pokémon außerhalb der Funktion:", pokemonList);
-  
+
   renderPokemon(pokemonList, content);
 }
 
@@ -35,10 +35,10 @@ async function renderPokemon(pokemonList, content) {
       image,
       languageName,
       pokemonData.id,
-      pokemonMainType,
+      pokemonMainType
     );
     console.log("PokeName:", languageName);
-    renderTypes(pokemonData, pokemonData.id)
+    renderTypes(pokemonData, pokemonData.id);
   }
 }
 
@@ -50,12 +50,11 @@ async function getlanguageName(languageId) {
   return languageName;
 }
 
-async function renderTypes(pokemonData, id){
+async function renderTypes(pokemonData, id) {
   let content = document.getElementById(`pokemon_types_${id}`);
-  
-  for(let pokemonTypes of pokemonData.types){
+
+  for (let pokemonTypes of pokemonData.types) {
     let pokemonType = pokemonTypes.type.name;
     content.innerHTML += `<span class="type ${pokemonType}">${pokemonType}</span>`;
   }
-
 }

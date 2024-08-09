@@ -3,7 +3,7 @@
 }
 
 .pokemon-card {
-  cursor: url('./assets/img/mouse-highlight.png'), auto;
+  cursor: url("./assets/img/mouse-highlight.png"), auto;
   position: relative;
   width: 240px;
   height: 280px;
@@ -42,7 +42,7 @@
   z-index: 802;
 }
 
-.pokemon-types{
+.pokemon-types {
   padding-top: 8px;
   font-size: 13px;
   display: flex;
@@ -50,80 +50,80 @@
   gap: 8px;
 }
 
-.type{
+.type {
   padding: 4px;
   border-radius: 4px;
   width: 57px;
 }
 
-.fighting{
-  box-shadow: 0px 0px 20px 2px rgb(206,63,107) inset;
+.fighting {
+  box-shadow: 0px 0px 20px 2px rgb(206, 63, 107) inset;
 }
 
-.psychic{
-  box-shadow: 0px 0px 20px 2px rgb(249,112,119) inset;
+.psychic {
+  box-shadow: 0px 0px 20px 2px rgb(249, 112, 119) inset;
 }
 
-.poison{
-  box-shadow: 0px 0px 20px 2px rgb(171,106,200) inset;
+.poison {
+  box-shadow: 0px 0px 20px 2px rgb(171, 106, 200) inset;
 }
 
-.dragon{
-  box-shadow: 0px 0px 20px 2px rgb(9,109,195) inset;
+.dragon {
+  box-shadow: 0px 0px 20px 2px rgb(9, 109, 195) inset;
 }
 
-.ghost{
-  box-shadow: 0px 0px 20px 2px rgb(82,105,173) inset;
+.ghost {
+  box-shadow: 0px 0px 20px 2px rgb(82, 105, 173) inset;
 }
 
-.dark{
-  box-shadow: 0px 0px 20px 2px rgb(91,82,101) inset;
+.dark {
+  box-shadow: 0px 0px 20px 2px rgb(91, 82, 101) inset;
 }
 
-.ground{
-  box-shadow: 0px 0px 20px 2px rgb(217,119,70) inset;
+.ground {
+  box-shadow: 0px 0px 20px 2px rgb(217, 119, 70) inset;
 }
 
-.fire{
-  box-shadow: 0px 0px 20px 2px rgb(252,157,83) inset;
+.fire {
+  box-shadow: 0px 0px 20px 2px rgb(252, 157, 83) inset;
 }
 
-.fairy{
-  box-shadow: 0px 0px 20px 2px rgb(239,141,230) inset;
+.fairy {
+  box-shadow: 0px 0px 20px 2px rgb(239, 141, 230) inset;
 }
 
-.water{
-  box-shadow: 0px 0px 20px 2px rgb(77,144,214) inset;
+.water {
+  box-shadow: 0px 0px 20px 2px rgb(77, 144, 214) inset;
 }
 
-.flying{
-  box-shadow: 0px 0px 20px 2px rgb(143,168,222) inset;
+.flying {
+  box-shadow: 0px 0px 20px 2px rgb(143, 168, 222) inset;
 }
 
-.normal{
-  box-shadow: 0px 0px 20px 2px rgb(144,153,162) inset;
+.normal {
+  box-shadow: 0px 0px 20px 2px rgb(144, 153, 162) inset;
 }
 
-.rock{
-  box-shadow: 0px 0px 20px 2px rgb(203,186,143) inset;
+.rock {
+  box-shadow: 0px 0px 20px 2px rgb(203, 186, 143) inset;
 }
 
-.electric{
-  box-shadow: 0px 0px 20px 2px rgb(245,211,60) inset;
+.electric {
+  box-shadow: 0px 0px 20px 2px rgb(245, 211, 60) inset;
 }
 
-.bug{
-  box-shadow: 0px 0px 20px 2px rgb(142,190,42) inset;
+.bug {
+  box-shadow: 0px 0px 20px 2px rgb(142, 190, 42) inset;
 }
 
-.grass{
-  box-shadow: 0px 0px 20px 2px rgb(103,190,95) inset;
+.grass {
+  box-shadow: 0px 0px 20px 2px rgb(103, 190, 95) inset;
 }
 
-.ice{
-  box-shadow: 0px 0px 20px 2px rgb(115,206,191) inset;
+.ice {
+  box-shadow: 0px 0px 20px 2px rgb(115, 206, 191) inset;
 }
 
-.steel{
-  box-shadow: 0px 0px 20px 2px rgb(92,143,162) inset;
+.steel {
+  box-shadow: 0px 0px 20px 2px rgb(92, 143, 162) inset;
 }
