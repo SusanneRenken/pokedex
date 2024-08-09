@@ -1,6 +1,7 @@
-let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=50git &offset=0";
+let BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=30git &offset=0";
 let POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
 let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
+let TYPE_URL = "https://pokeapi.co/api/v2/type/";
 let STAT_URL = "https://pokeapi.co/api/v2/stat/";
 let language = "de";
 
@@ -27,29 +28,34 @@ async function renderPokemon(pokemonList, content) {
   for (let pokemon of pokemonList.results) {
     let pokemonData = await fetchDataJason(pokemon.url);
     let image = pokemonData.sprites.other["official-artwork"].front_default;
-    let germanName = await getGermanName(pokemonData.id);
-    let pokemonType = await getPokemonType(pokemonData.id);
+    let languageName = await getlanguageName(pokemonData.id);
+    let pokemonMainType = pokemonData.types["0"].type.name;
 
-    content.innerHTML += PokemonCardHTML(
+    content.innerHTML += pokemonCardHTML(
       image,
-      germanName,
+      languageName,
       pokemonData.id,
-      pokemonType,
+      pokemonMainType,
     );
+    console.log("PokeName:", languageName);
+    renderTypes(pokemonData, pokemonData.id)
   }
 }
 
-async function getGermanName(pokemonId) {
-  let speciesData = await fetchDataJason(`${SPECIES_URL}${pokemonId}`);
-  let germanName = speciesData.names.find(
+async function getlanguageName(languageId) {
+  let speciesData = await fetchDataJason(`${SPECIES_URL}${languageId}`);
+  let languageName = speciesData.names.find(
     (name) => name.language.name === language
   ).name;
-  return germanName;
+  return languageName;
 }
 
-async function getPokemonType(pokemonId) {
-  let pokemonData = await fetchDataJason(`${POKEMON_URL}${pokemonId}`);
-  let pokemonType = pokemonData.types["0"].type.name;
-  return pokemonType;
-}
+async function renderTypes(pokemonData, id){
+  let content = document.getElementById(`pokemon_types_${id}`);
+  
+  for(let pokemonTypes of pokemonData.types){
+    let pokemonType = pokemonTypes.type.name;
+    content.innerHTML += `<span class="type ${pokemonType}">${pokemonType}</span>`;
+  }
 
+}
