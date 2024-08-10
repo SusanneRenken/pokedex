@@ -37,7 +37,8 @@ async function fetchDataJason(apiUrl) {
 async function renderPokemon(pokemonList, content) {
   for (let pokemon of pokemonList.results) {
     let pokemonData = await fetchDataJason(pokemon.url);
-    let image = pokemonData.sprites.other["official-artwork"].front_default;
+    // let image = pokemonData.sprites.other["official-artwork"].front_default;
+    let image = pokemonData.sprites.other["home"].front_default;
     let languageName = await getlanguageName(pokemonData.id);
     let pokemonMainType = pokemonData.types["0"].type.name;
 

@@ -22,9 +22,9 @@
   }
 
   .pokemon-img {
-    height: 72px;
-    width: 72px;
-    bottom: 100px;
+    height: 76px;
+    width: 76px;
+    bottom: 105px;
   }
 
   .pokemon-types {
@@ -43,7 +43,7 @@
 
 @media (max-width: 640px) {
   header {
-    height: 140px;
+    height: 180px;
     gap: 16px;
   }
 
@@ -54,15 +54,26 @@
   .content {
     padding-top: 36px;
   }
+
+  .menues {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
 }
 
 @media (max-width: 430px) {
+  header {
+    height: 160px;
+  }
+
   h1 {
     font-size: 36px;
   }
 
   .content {
-    padding-top: 24px;
+    padding-top: 16px;
   }
 
   .searchBox input {
@@ -71,6 +82,10 @@
   }
   
   .searchBox button {
+    height: 32px;
+  }
+
+  #language_select{
     height: 32px;
   }
 }

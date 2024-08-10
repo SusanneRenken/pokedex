@@ -11,7 +11,8 @@ html {
 body {
   font-family: "Livvic", normal;
   height: 100%;
-  background-color: rgb(240, 240, 240);
+  /* background-color: rgb(240, 240, 240); */
+  background-color: rgb(32, 32, 32);
   cursor: url('../assets/img/mouse-pointer.png'), auto;
 }
 
@@ -29,14 +30,14 @@ header {
 footer {
   height: 80px;
   margin-top: 24px;
-  background-image: linear-gradient(to top, rgba(61, 125, 202, 0.3), rgb(240, 240, 240));
+  background-image: linear-gradient(to top, rgba(61, 125, 202, 0.3), rgb(32, 32, 32));
 }
 
 h1 {
-  color: rgba(61, 125, 202, 0.3);
+  color: rgba(61, 125, 202, 0.45);
   font-size: 64px;
   font-weight: 900;
-  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1), -4px -4px 4px white;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0), -0px -0px 4px rgba(255, 255, 255, 0.3);
   -webkit-text-stroke: 0.5px rgba(61, 125, 202, 0.8);
 }
 
