@@ -20,21 +20,29 @@
   <body onload="init()">
     <header>
       <h1 id="headline">Mein Pokédex</h1>
+      <div class="menues">
+        <div class="searchBox">
+          <input
+            id="search_pokemon"
+            type="text"
+            placeholder="Such dein Pokémon"
+          />
+          <button id="search_button">🔎</button>
+        </div>
 
-      <div class="searchBox">
-        <input
-          id="search_pokemon"
-          type="text"
-          placeholder="Such dein Pokémon"
-        />
-        <button id="search_button">🔎</button>
+        <select id="language_select" onchange="changeLanguage(this.value)">
+          <option value="de">Deutsch</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+        </select>
       </div>
     </header>
 
     <section class="content" id="pokemon_cards"></section>
 
     <section class="load-Btn-content">
-      <button class="load-Btn" onclick="loadMorePokemon()">
+      <button class="load-Btn" id="load_button" onclick="loadMorePokemon()">
         weitere Pokémons
       </button>
     </section>

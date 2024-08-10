@@ -4,9 +4,10 @@ let POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
 let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 let TYPE_URL = "https://pokeapi.co/api/v2/type/";
 let STAT_URL = "https://pokeapi.co/api/v2/stat/";
-let language = "en";
+let language = "de";
 
 async function init() {
+  updateTexts();
   let content = document.getElementById("pokemon_cards");
   content.innerHTML = "";
   await loadMorePokemon();
@@ -14,10 +15,12 @@ async function init() {
 
 async function loadMorePokemon() {
   let content = document.getElementById("pokemon_cards");
-  let pokemonList = await fetchDataJason(`https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`);
-  
+  let pokemonList = await fetchDataJason(
+    `https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`
+  );
+
   await renderPokemon(pokemonList, content);
-  
+
   loadedPokemons += pokemonsPerLoad;
 }
 
@@ -45,7 +48,7 @@ async function renderPokemon(pokemonList, content) {
       pokemonMainType
     );
 
-    renderTypes(pokemonData, pokemonData.id);
+    renderTypes(pokemonData);
   }
 }
 
@@ -57,8 +60,8 @@ async function getlanguageName(Id) {
   return languageName;
 }
 
-async function renderTypes(pokemonData, id) {
-  let content = document.getElementById(`pokemon_types_${id}`);
+async function renderTypes(pokemonData) {
+  let content = document.getElementById(`pokemon_types_${pokemonData.id}`);
 
   for (let pokemonTypes of pokemonData.types) {
     let pokemonType = pokemonTypes.type.name;
@@ -74,4 +77,36 @@ async function getlanguageId(Url) {
     (name) => name.language.name === language
   ).name;
   return languageType;
+}
+
+async function changeLanguage(newLanguage) {
+  language = newLanguage;
+  updateTexts();
+  await reloadAllPokemon();
+}
+
+async function reloadAllPokemon() {
+  let content = document.getElementById("pokemon_cards");
+  content.innerHTML = "";
+  loadedPokemons = 0;
+  await loadMorePokemon();
+}
+
+function updateTexts() {
+  const currentTranslation = translations[language] || translations["en"];
+
+  // Update title
+  const headline = document.getElementById("headline");
+  headline.textContent = currentTranslation.title;
+
+  // Update search placeholder
+  const searchInput = document.getElementById("search_pokemon");
+  searchInput.placeholder = currentTranslation.searchPlaceholder;
+
+  // Update load button text
+  const loadButton = document.getElementById("load_button");
+  loadButton.textContent = currentTranslation.loadButton;
+
+  const languageSelect = document.getElementById("language_select");
+  languageSelect.value = language;
 }
