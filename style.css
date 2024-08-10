@@ -13,7 +13,7 @@
 .pokemon-circle {
   height: 180px;
   width: 180px;
-  background-color: rgb(48, 47, 47);
+  background-color: rgb(48, 48, 48);
   position: absolute;
   bottom: 75px;
   border-radius: 50%;
@@ -23,7 +23,7 @@
 .pokemon-description {
   width: 100%;
   height: 120px;
-  background-color: rgb(160, 159, 159);
+  background-color: rgb(151, 151, 151);
   padding: 16px;
   border-radius: 8px;
   box-shadow: 10px 10px 8px rgba(255, 255, 255, 0.8) inset,
@@ -61,7 +61,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.fighting {
-  box-shadow: 0px 0px 20px 4px rgb(206, 63, 107);
+  box-shadow: 0px 0px 28px 12px rgb(206, 63, 107);
 }
 
 .psychic {
@@ -69,7 +69,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.psychic {
-  box-shadow: 0px 0px 20px 4px rgb(249, 112, 119);
+  box-shadow: 0px 0px 28px 12px rgb(249, 112, 119);
 }
 
 .poison {
@@ -77,7 +77,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.poison {
-  box-shadow: 0px 0px 20px 4px rgb(171, 106, 200);
+  box-shadow: 0px 0px 28px 12px rgb(171, 106, 200);
 }
 
 .dragon {
@@ -85,7 +85,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.dragon {
-  box-shadow: 0px 0px 20px 4px rgb(9, 109, 195);
+  box-shadow: 0px 0px 28px 12px rgb(9, 109, 195);
 }
 
 .ghost {
@@ -93,7 +93,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.ghost {
-  box-shadow: 0px 0px 20px 4px rgb(82, 105, 173);
+  box-shadow: 0px 0px 28px 12px rgb(82, 105, 173);
 }
 
 .dark {
@@ -101,7 +101,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.dark {
-  box-shadow: 0px 0px 20px 4px rgb(91, 82, 101);
+  box-shadow: 0px 0px 28px 12px rgb(91, 82, 101);
 }
 
 .ground {
@@ -109,7 +109,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.ground {
-  box-shadow: 0px 0px 20px 4px rgb(217, 119, 70);
+  box-shadow: 0px 0px 28px 12px rgb(217, 119, 70);
 }
 
 .fire {
@@ -117,7 +117,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.fire {
-  box-shadow: 0px 0px 20px 4px rgb(252, 157, 83);
+  box-shadow: 0px 0px 28px 12px rgb(252, 157, 83);
 }
 
 .fairy {
@@ -125,7 +125,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.fairy {
-  box-shadow: 0px 0px 20px 4px rgb(239, 141, 230);
+  box-shadow: 0px 0px 28px 12px rgb(239, 141, 230);
 }
 
 .water {
@@ -133,7 +133,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.water {
-  box-shadow: 0px 0px 20px 4px rgb(77, 144, 214);
+  box-shadow: 0px 0px 28px 12px rgb(77, 144, 214);
 }
 
 .flying {
@@ -141,7 +141,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.flying {
-  box-shadow: 0px 0px 20px 4px rgb(143, 168, 222);
+  box-shadow: 0px 0px 28px 12px rgb(143, 168, 222);
 }
 
 .normal {
@@ -149,7 +149,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.normal {
-  box-shadow: 0px 0px 20px 4px rgb(144, 153, 162);
+  box-shadow: 0px 0px 28px 12px rgb(144, 153, 162);
 }
 
 .rock {
@@ -157,7 +157,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.rock {
-  box-shadow: 0px 0px 20px 4px rgb(203, 186, 143);
+  box-shadow: 0px 0px 28px 12px rgb(203, 186, 143);
 }
 
 .electric {
@@ -165,7 +165,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.electric {
-  box-shadow: 0px 0px 20px 4px rgb(245, 211, 60);
+  box-shadow: 0px 0px 28px 12px rgb(245, 211, 60);
 }
 
 .bug {
@@ -173,7 +173,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.bug {
-  box-shadow: 0px 0px 20px 4px rgb(142, 190, 42);
+  box-shadow: 0px 0px 28px 12px rgb(142, 190, 42);
 }
 
 .grass {
@@ -181,7 +181,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.grass {
-  box-shadow: 0px 0px 20px 4px rgb(103, 190, 95);
+  box-shadow: 0px 0px 28px 12px rgb(103, 190, 95);
 }
 
 .ice {
@@ -189,7 +189,7 @@
 }
 
 .pokemon-card:hover .pokemon-circle.ice {
-  box-shadow: 0px 0px 20px 4px rgb(115, 206, 191);
+  box-shadow: 0px 0px 28px 12px rgb(115, 206, 191);
 }
 
 .steel {
@@ -197,5 +197,5 @@
 }
 
 .pokemon-card:hover .pokemon-circle.steel {
-  box-shadow: 0px 0px 20px 4px rgb(92, 143, 162);
+  box-shadow: 0px 0px 28px 12px rgb(92, 143, 162);
 }
