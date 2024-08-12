@@ -28,7 +28,7 @@ header {
 }
 
 footer {
-  height: 80px;
+  height: 40px;
   margin-top: 24px;
   background-image: linear-gradient(to top, rgba(61, 125, 202, 0.3), rgb(32, 32, 32));
 }
@@ -55,7 +55,7 @@ a {
 
 .content {
   max-width: 1440px;
-  min-height: calc(100vh - 264px - 100px);
+  min-height: calc(100vh - 224px - 100px);
   margin: auto;
   padding-inline: 8px;
   padding-top: 48px;

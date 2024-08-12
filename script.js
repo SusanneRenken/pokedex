@@ -31,33 +31,79 @@ async function init() {
 
   for (const pokemon of pokemonList.results) {
     let pokemonData = await fetchDataJason(pokemon.url);
-    let PokemonId = pokemonData.id;
-    let PokemonNameEn = pokemonData.name;
-    let PokemonImage = pokemonData.sprites.other["home"].front_default;
-    // let languageName = await getlanguageName(pokemonData.id);
-    // let pokemonMainType = pokemonData.types[0].type.name;
+    let pokemonId = pokemonData.id;
+    let pokemonImage = pokemonData.sprites.other["home"].front_default;
+
+    let pokemonNames = await getPokemonNames(pokemonId);
+    let pokemonTypes = await getPokemonTypes(pokemonData);
 
     allLoadedPokemons.push({
-      id: PokemonId,
-      name_en: PokemonNameEn,
-      image: PokemonImage,
+      id: pokemonId,
+      names: pokemonNames,
+      image: pokemonImage,
+      types: pokemonTypes,
     });
-
-    
   }
-  
-  console.log("API Pokémons:", allLoadedPokemons); //DELETE
+
+  console.log("allLoadedPokemons:", allLoadedPokemons);
 }
 
-async function getlanguageName(Id) {
+async function getPokemonNames(Id) {
   let speciesData = await fetchDataJason(`${SPECIES_URL}${Id}`);
-  let languageName = speciesData.names.find(
-    (name) => name.language.name === language
-  ).name;
+  let names = {};
 
-  return languageName;
+  for (let language of languages) {
+    let languageName =
+      speciesData.names.find((name) => name.language.name === language)?.name ||
+      "Unknown";
+
+    names[language] = languageName;
+  }
+
+  return names;
 }
 
+async function getPokemonTypes(pokemonData) {
+  let pokemonTypes = [];
+
+  for (let type of pokemonData.types) {
+    let typeName = type.type.name;
+    let languageTypes = await getlanguageId(type.type.url);
+
+    let typeObject = {
+      [typeName]: languageTypes
+    };
+
+    pokemonTypes.push(typeObject);
+  }
+
+  return pokemonTypes;
+}
+
+async function getlanguageId(url) {
+  let typeData = await fetchDataJason(url);
+  let languageTypes = {};
+
+  for (let language of languages) {
+    let languageType = typeData.names.find(
+      (name) => name.language.name === language
+    )?.name || "Unknown";
+    languageTypes[language] = languageType;
+  }
+
+  return languageTypes;
+}
+
+// async function renderTypes(pokemonData) {
+//   let content = document.getElementById(`pokemon_types_${pokemonData.id}`);
+
+//   for (let pokemonTypes of pokemonData.types) {
+//     let pokemonType = pokemonTypes.type.name;
+//     let languageType = await getlanguageId(pokemonTypes.type.url);
+
+//     content.innerHTML += `<span class="type ${pokemonType}">${languageType}</span>`;
+//   }
+// }
 
 // async function loadMorePokemon() {
 //   let content = document.getElementById("pokemon_cards");
@@ -88,27 +134,6 @@ async function getlanguageName(Id) {
 //     pushPokemonsToArray(pokemonData.id, languageName);
 //   }
 //   console.log("Loaded Pokémons:", allLoadedPokemons); //DELETE
-// }
-
-
-
-// async function renderTypes(pokemonData) {
-//   let content = document.getElementById(`pokemon_types_${pokemonData.id}`);
-
-//   for (let pokemonTypes of pokemonData.types) {
-//     let pokemonType = pokemonTypes.type.name;
-//     let languageType = await getlanguageId(pokemonTypes.type.url);
-
-//     content.innerHTML += `<span class="type ${pokemonType}">${languageType}</span>`;
-//   }
-// }
-
-// async function getlanguageId(Url) {
-//   let typeData = await fetchDataJason(Url);
-//   let languageType = typeData.names.find(
-//     (name) => name.language.name === language
-//   ).name;
-//   return languageType;
 // }
 
 // async function pushPokemonsToArray(id, name) {
