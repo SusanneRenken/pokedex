@@ -30,6 +30,7 @@ async function loadMorePokemon() {
     `https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`
   );
   // console.log("API Pokémons:", pokemonList); //DELETE
+  
   await renderPokemon(pokemonList, content);
   loadedPokemons += pokemonsPerLoad;
 }
@@ -39,7 +40,7 @@ async function renderPokemon(pokemonList, content) {
     let pokemonData = await fetchDataJason(pokemon.url);
     let image = pokemonData.sprites.other["home"].front_default;
     let languageName = await getlanguageName(pokemonData.id);
-    let pokemonMainType = pokemonData.types["0"].type.name;
+    let pokemonMainType = pokemonData.types[0].type.name;
 
     content.innerHTML += pokemonCardHTML(
       image,
@@ -92,21 +93,17 @@ async function changeLanguage(newLanguage) {
   allLoadedPokemons = [];
   language = newLanguage;
   updateTexts();
-  // await reloadAllPokemon();
+  await reloadAllPokemon();
+}
+
+async function reloadAllPokemon() {
   let content = document.getElementById("pokemon_cards");
   content.innerHTML = "";
   loadedPokemons = 0;
   await loadMorePokemon();
 }
 
-// async function reloadAllPokemon() {
-//   let content = document.getElementById("pokemon_cards");
-//   content.innerHTML = "";
-//   loadedPokemons = 0;
-//   await loadMorePokemon();
-// }
-
-function searchPokemon(searchTerm) {
+async function searchPokemon(searchTerm) {
   searchTerm = searchTerm.toLowerCase();
 
   if (searchTerm.length >= 3) {
@@ -115,7 +112,32 @@ function searchPokemon(searchTerm) {
     );
 
     console.log("Suchergebnisse:", searchResults); //DELETE
+    await renderSearchedPokemon(searchResults);
   }
+}
+
+async function renderSearchedPokemon(searchResults) {
+  let content = document.getElementById("pokemon_cards");
+  content.innerHTML = "";
+
+  for (let pokemon of searchResults) {
+
+
+    let pokemonData = await fetchDataJason(`${POKEMON_URL}${pokemon.id}`);
+    let image = pokemonData.sprites.other["home"].front_default;
+    let languageName = await getlanguageName(pokemonData.id);
+    let pokemonMainType = pokemonData.types[0].type.name;
+
+    content.innerHTML += pokemonCardHTML(
+      image,
+      languageName,
+      pokemonData.id,
+      pokemonMainType
+    );
+    renderTypes(pokemonData);
+
+  }
+  console.log("Loaded Pokémons:", allLoadedPokemons); //DELETE
 }
 
 function updateTexts() {
