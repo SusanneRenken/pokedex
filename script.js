@@ -6,9 +6,12 @@ let STAT_URL = "https://pokeapi.co/api/v2/stat/";
 let allLoadedPokemons = [];
 
 let loadedPokemons = 0;
-let pokemonsPerLoad = 5;
+let pokemonsPerLoad = 40;
 let languages = ["en", "de", "fr", "es"];
 let language = "de";
+
+const searchInput = document.getElementById("search_pokemon");
+searchInput.addEventListener("input", handleSearch);
 
 async function fetchDataJason(apiUrl) {
   try {
@@ -23,12 +26,19 @@ async function fetchDataJason(apiUrl) {
 async function init() {
   console.log("API Pokémons:"); //DELETE
 
-  let pokemonList = await fetchDataJason(
+  const pokemonList = await fetchDataJason(
     `https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`
   );
 
   console.log("API Pokémons:", pokemonList); //DELETE
 
+  await populatePokemonArray(pokemonList);
+
+  console.log("allLoadedPokemons:", allLoadedPokemons); //DELETE
+  renderPokemon();
+}
+
+async function populatePokemonArray(pokemonList) {
   for (const pokemon of pokemonList.results) {
     let pokemonData = await fetchDataJason(pokemon.url);
     let pokemonId = pokemonData.id;
@@ -44,8 +54,6 @@ async function init() {
       types: pokemonTypes,
     });
   }
-
-  console.log("allLoadedPokemons:", allLoadedPokemons);
 }
 
 async function getPokemonNames(Id) {
@@ -68,10 +76,10 @@ async function getPokemonTypes(pokemonData) {
 
   for (let type of pokemonData.types) {
     let typeName = type.type.name;
-    let languageTypes = await getlanguageId(type.type.url);
+    const languageTypes = await getlanguageId(type.type.url);
 
     let typeObject = {
-      [typeName]: languageTypes
+      [typeName]: languageTypes,
     };
 
     pokemonTypes.push(typeObject);
@@ -81,132 +89,107 @@ async function getPokemonTypes(pokemonData) {
 }
 
 async function getlanguageId(url) {
-  let typeData = await fetchDataJason(url);
+  const typeData = await fetchDataJason(url);
   let languageTypes = {};
 
   for (let language of languages) {
-    let languageType = typeData.names.find(
-      (name) => name.language.name === language
-    )?.name || "Unknown";
+    let languageType =
+      typeData.names.find((name) => name.language.name === language)?.name ||
+      "Unknown";
     languageTypes[language] = languageType;
   }
 
   return languageTypes;
 }
 
-// async function renderTypes(pokemonData) {
-//   let content = document.getElementById(`pokemon_types_${pokemonData.id}`);
+function renderPokemon(pokemonToRender = allLoadedPokemons) {
+  let content = document.getElementById("pokemon_cards");
+  content.innerHTML = "";
 
-//   for (let pokemonTypes of pokemonData.types) {
-//     let pokemonType = pokemonTypes.type.name;
-//     let languageType = await getlanguageId(pokemonTypes.type.url);
+  for (let pokemon of pokemonToRender) {
+    let id = pokemon.id;
+    let image = pokemon.image;
+    let languageName = pokemon.names[language];
+    let pokemonMainType = Object.keys(pokemon.types[0])[0];
 
-//     content.innerHTML += `<span class="type ${pokemonType}">${languageType}</span>`;
-//   }
-// }
+    content.innerHTML += pokemonCardHTML(
+      image,
+      languageName,
+      id,
+      pokemonMainType
+    );
+    renderTypes(pokemon);
+  }
+}
 
-// async function loadMorePokemon() {
-//   let content = document.getElementById("pokemon_cards");
-//   let pokemonList = await fetchDataJason(
-//     `https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`
-//   );
-//   // console.log("API Pokémons:", pokemonList); //DELETE
+function renderTypes(pokemon) {
+  let content = document.getElementById(`pokemon_types_${pokemon.id}`);
+  content.innerHTML = "";
 
-//   await renderPokemon(pokemonList, content);
-//   loadedPokemons += pokemonsPerLoad;
-//   lastLoadedPokemonCount = loadedPokemons;
-// }
+  for (let pokemonTypes of pokemon.types) {
+    let pokemonType = Object.keys(pokemonTypes)[0];
+    let languageType = pokemonTypes[pokemonType][language];
 
-// async function renderPokemon(pokemonList, content) {
-//   for (let pokemon of pokemonList.results) {
-//     let pokemonData = await fetchDataJason(pokemon.url);
-//     let image = pokemonData.sprites.other["home"].front_default;
-//     let languageName = await getlanguageName(pokemonData.id);
-//     let pokemonMainType = pokemonData.types[0].type.name;
+    content.innerHTML += `<span class="type ${pokemonType}">${languageType}</span>`;
+  }
+}
 
-//     content.innerHTML += pokemonCardHTML(
-//       image,
-//       languageName,
-//       pokemonData.id,
-//       pokemonMainType
-//     );
-//     renderTypes(pokemonData);
-//     pushPokemonsToArray(pokemonData.id, languageName);
-//   }
-//   console.log("Loaded Pokémons:", allLoadedPokemons); //DELETE
-// }
+async function loadMorePokemon() {
+  loadedPokemons += pokemonsPerLoad;
+  lastLoadedPokemonCount = loadedPokemons;
+  let pokemonList = await fetchDataJason(
+    `https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`
+  );
 
-// async function pushPokemonsToArray(id, name) {
-//   allLoadedPokemons.push({
-//     id: id,
-//     name: name,
-//   });
-// }
+  await populatePokemonArray(pokemonList);
 
-// async function changeLanguage(newLanguage) {
-//   allLoadedPokemons = [];
-//   language = newLanguage;
-//   updateTexts();
-//   await reloadAllPokemon();
-// }
+  renderPokemon();
+}
 
-// async function reloadAllPokemon() {
-//   let content = document.getElementById("pokemon_cards");
-//   content.innerHTML = "";
-//   loadedPokemons = 0;
-//   await loadMorePokemon();
-// }
+function changeLanguage(newLanguage) {
+  language = newLanguage;
+  updateTexts();
+  renderPokemon();
+}
 
-// async function searchPokemon(searchTerm) {
-//   searchTerm = searchTerm.toLowerCase();
+function handleSearch() {
+  const query = searchInput.value.trim();
+  const filteredPokemon = searchPokemon(query);
+  renderPokemon(filteredPokemon);
+}
 
-//   let content = document.getElementById("pokemon_cards");
+function searchPokemon(query) {
+  if (query.length === 0) return allLoadedPokemons;
 
-//   if (searchTerm.length >= 3) {
-//     const searchResults = allLoadedPokemons.filter((pokemon) =>
-//       pokemon.name.toLowerCase().includes(searchTerm)
-//     );
+  const isNumeric = /^\d+$/.test(query);
 
-//     console.log("Suchergebnisse:", searchResults); //DELETE
-//     await renderSearchedPokemon(searchResults, content);
-//   }
-// }
+  return allLoadedPokemons.filter((pokemon) => {
+    if (isNumeric) {
+      return pokemon.id.toString().includes(query);
+    } else if (query.length >= 3) {
+      return pokemon.names[language]
+        .toLowerCase()
+        .includes(query.toLowerCase());
+    }
+    return allLoadedPokemons;
+  });
+}
 
-// async function renderSearchedPokemon(searchResults, content) {
-//   content.innerHTML = "";
+function updateTexts() {
+  const currentTranslation = translations[language] || translations["en"];
 
-//   for (let pokemon of searchResults) {
-//     let pokemonData = await fetchDataJason(`${POKEMON_URL}${pokemon.id}`);
-//     let image = pokemonData.sprites.other["home"].front_default;
-//     let languageName = await getlanguageName(pokemonData.id);
-//     let pokemonMainType = pokemonData.types[0].type.name;
+  // Update title
+  const headline = document.getElementById("headline");
+  headline.textContent = currentTranslation.title;
 
-//     content.innerHTML += pokemonCardHTML(
-//       image,
-//       languageName,
-//       pokemonData.id,
-//       pokemonMainType
-//     );
-//     renderTypes(pokemonData);
-//   }
-//   console.log("Loaded Pokémons:", allLoadedPokemons); //DELETE
-// }
+  // Update search placeholder
+  const searchInput = document.getElementById("search_pokemon");
+  searchInput.placeholder = currentTranslation.searchPlaceholder;
 
-// function updateTexts() {
-//   const currentTranslation = translations[language] || translations["en"];
+  // Update load button text
+  const loadButton = document.getElementById("load_button");
+  loadButton.textContent = currentTranslation.loadButton;
 
-//   // Update title
-//   const headline = document.getElementById("headline");
-//   headline.textContent = currentTranslation.title;
-
-//   // Update search placeholder
-//   const searchInput = document.getElementById("search_pokemon");
-//   searchInput.placeholder = currentTranslation.searchPlaceholder;
-
-//   // Update load button text
-//   const loadButton = document.getElementById("load_button");
-//   loadButton.textContent = currentTranslation.loadButton;
-
-//   const languageSelect = document.getElementById("language_select");
-//   languageSelect.value = language;
-// }
+  const languageSelect = document.getElementById("language_select");
+  languageSelect.value = language;
+}
