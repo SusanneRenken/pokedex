@@ -55,10 +55,16 @@ a {
 
 .content {
   max-width: 1440px;
-  min-height: calc(100vh - 224px - 100px);
+  min-height: calc(100vh - 224px);
   margin: auto;
   padding-inline: 8px;
   padding-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.pokemon-cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -67,7 +73,7 @@ a {
 
 .load-Btn-content {
   height: 100px;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: end;
 }

@@ -1,22 +1,22 @@
 const translations = {
   de: {
     title: "Mein Pokédex",
-    searchPlaceholder: "Such dein Pokémon",
+    searchPlaceholder: "Name, ID oder Typ",
     loadButton: "Lade Pokémon",
   },
   en: {
     title: "My Pokédex",
-    searchPlaceholder: "Search your Pokémon",
+    searchPlaceholder: "Name, ID or Type",
     loadButton: "Load Pokémon",
   },
   fr: {
     title: "Mon Pokédex",
-    searchPlaceholder: "Cherchez votre Pokémon",
+    searchPlaceholder: "Nom, ID ou Type",
     loadButton: "Charger Pokémon",
   },
   es: {
     title: "Mi Pokédex",
-    searchPlaceholder: "Busca tu Pokémon",
+    searchPlaceholder: "Nombre, ID o Tipo",
     loadButton: "Cargar Pokémon",
   },
 };

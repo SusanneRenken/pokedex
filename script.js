@@ -6,7 +6,7 @@ let STAT_URL = "https://pokeapi.co/api/v2/stat/";
 let allLoadedPokemons = [];
 
 let loadedPokemons = 0;
-let pokemonsPerLoad = 40;
+let pokemonsPerLoad = 20;
 let languages = ["en", "de", "fr", "es"];
 let language = "de";
 
@@ -25,6 +25,7 @@ async function fetchDataJason(apiUrl) {
 
 async function init() {
   console.log("API Pokémons:"); //DELETE
+  showLoading();
 
   const pokemonList = await fetchDataJason(
     `https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`
@@ -36,6 +37,7 @@ async function init() {
 
   console.log("allLoadedPokemons:", allLoadedPokemons); //DELETE
   renderPokemon();
+  hideLoading();
 }
 
 async function populatePokemonArray(pokemonList) {
@@ -135,6 +137,7 @@ function renderTypes(pokemon) {
 }
 
 async function loadMorePokemon() {
+  showLoading()
   loadedPokemons += pokemonsPerLoad;
   lastLoadedPokemonCount = loadedPokemons;
   let pokemonList = await fetchDataJason(
@@ -144,6 +147,17 @@ async function loadMorePokemon() {
   await populatePokemonArray(pokemonList);
 
   renderPokemon();
+  hideLoading()
+}
+
+function showLoading() {
+  document.querySelector('.loading').style.display = 'flex';
+  document.querySelector('.load-Btn-content').style.display = 'none';
+}
+
+function hideLoading() {
+  document.querySelector('.loading').style.display = 'none';
+  document.querySelector('.load-Btn-content').style.display = 'flex';
 }
 
 function changeLanguage(newLanguage) {
@@ -160,16 +174,23 @@ function handleSearch() {
 
 function searchPokemon(query) {
   if (query.length === 0) return allLoadedPokemons;
-
+  
+  query = query.toLowerCase().trim();
   const isNumeric = /^\d+$/.test(query);
-
-  return allLoadedPokemons.filter((pokemon) => {
+  
+  return allLoadedPokemons.filter(pokemon => {
     if (isNumeric) {
-      return pokemon.id.toString().includes(query);
+      return pokemon.id === parseInt(query);
     } else if (query.length >= 3) {
-      return pokemon.names[language]
-        .toLowerCase()
-        .includes(query.toLowerCase());
+      const nameMatch = pokemon.names[language].toLowerCase().includes(query);
+            
+      const typeMatch = pokemon.types.some(typeObj => {
+        const typeName = Object.keys(typeObj)[0];
+        return typeName.toLowerCase().includes(query) ||
+               typeObj[typeName][language].toLowerCase().includes(query);
+      });
+      
+      return nameMatch || typeMatch;
     }
     return allLoadedPokemons;
   });
