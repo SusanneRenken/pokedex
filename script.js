@@ -178,39 +178,51 @@ function searchPokemon(query) {
   query = query.toLowerCase().trim();
   const isNumeric = /^\d+$/.test(query);
   
-  return allLoadedPokemons.filter(pokemon => {
-    if (isNumeric) {
-      return pokemon.id === parseInt(query);
-    } else if (query.length >= 3) {
-      const nameMatch = pokemon.names[language].toLowerCase().includes(query);
-            
-      const typeMatch = pokemon.types.some(typeObj => {
-        const typeName = Object.keys(typeObj)[0];
-        return typeName.toLowerCase().includes(query) ||
-               typeObj[typeName][language].toLowerCase().includes(query);
-      });
-      
-      return nameMatch || typeMatch;
-    }
-    return allLoadedPokemons;
+  return allLoadedPokemons.filter(pokemon => filterPokemon(pokemon, query, isNumeric));
+}
+
+function filterPokemon(pokemon, query, isNumeric) {
+  if (isNumeric) {
+    return searchById(pokemon, query);
+  } else if (query.length >= 3) {
+    return searchByNameOrType(pokemon, query);
+  }
+  return allLoadedPokemons;
+}
+
+function searchById(pokemon, query) {
+  return pokemon.id === parseInt(query);
+}
+
+function searchByNameOrType(pokemon, query) {
+  const nameMatch = pokemon.names[language].toLowerCase().includes(query);
+  
+  const typeMatch = pokemon.types.some(typeObj => {
+    const typeName = Object.keys(typeObj)[0];
+    return typeName.toLowerCase().includes(query) ||
+           typeObj[typeName][language].toLowerCase().includes(query);
   });
+  
+  return nameMatch || typeMatch;
 }
 
 function updateTexts() {
   const currentTranslation = translations[language] || translations["en"];
 
-  // Update title
   const headline = document.getElementById("headline");
   headline.textContent = currentTranslation.title;
 
-  // Update search placeholder
   const searchInput = document.getElementById("search_pokemon");
   searchInput.placeholder = currentTranslation.searchPlaceholder;
 
-  // Update load button text
   const loadButton = document.getElementById("load_button");
   loadButton.textContent = currentTranslation.loadButton;
 
   const languageSelect = document.getElementById("language_select");
   languageSelect.value = language;
+}
+
+function toggleOverlay(){
+  let refOverlay = document.getElementById('overlay')
+  refOverlay.classList.toggle('d-none')
 }

@@ -11,7 +11,6 @@ html {
 body {
   font-family: "Livvic", normal;
   height: 100%;
-  /* background-color: rgb(240, 240, 240); */
   background-color: rgb(32, 32, 32);
   cursor: url('../assets/img/mouse-pointer.png'), auto;
 }
@@ -62,6 +61,19 @@ a {
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
 .pokemon-cards {

@@ -125,6 +125,10 @@
   .pokemon-card:hover .pokemon-circle.grass {
     box-shadow: 0px 0px 28px 12px rgb(103, 190, 95);
   }
+
+  .single-grass{
+    background-color: rgb(103, 190, 95);
+  }
   
   .ice {
     box-shadow: 0px 0px 20px 2px rgb(115, 206, 191) inset;

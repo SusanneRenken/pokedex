@@ -20,7 +20,7 @@
 
   <body onload="init()">
     <header>
-      <h1 id="headline">Mein Pokédex</h1>
+      <h1 id="headline" onclick="toggleOverlay()">Mein Pokédex</h1>
       <div class="menues">
         <div class="searchBox">
           <input
@@ -41,16 +41,16 @@
       </div>
     </header>
 
-    
-
     <section class="content">
-      <div class="pokemon-cards" id="pokemon_cards">
-
-      </div>
+      <div class="pokemon-cards" id="pokemon_cards"></div>
 
       <div class="loading">
-        <img class="loading-shadow" src="./assets/img/loading-shadow.png" alt="">
-        <img class="loading-ball" src="./assets/img/loading-ball.png" alt="">
+        <img
+          class="loading-shadow"
+          src="./assets/img/loading-shadow.png"
+          alt=""
+        />
+        <img class="loading-ball" src="./assets/img/loading-ball.png" alt="" />
       </div>
 
       <div class="load-Btn-content">
@@ -58,9 +58,27 @@
           weitere Pokémons
         </button>
       </div>
-  
     </section>
-     
+
+    <section class="overlay" id="overlay">
+      
+      
+        <div class="single-card single-grass">
+
+          <img src=https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png alt="" class="single-img"/>
+  
+          <div class="single-circle"></div>
+  
+          <div class="single-description">
+            <h2>Ein Monster</h2>
+            <p># 0815</p>
+            <div class="pokemon-types" id="pokemon_types_${id}"></div>
+          </div>
+  
+      </div>
+      
+    </section>
+
     <footer></footer>
   </body>
 </html>
