@@ -20,7 +20,7 @@
 
   <body onload="init()">
     <header>
-      <h1 id="headline" onclick="toggleOverlay()">Mein Pokédex</h1>
+      <h1 id="headline">Mein Pokédex</h1>
       <div class="menues">
         <div class="searchBox">
           <input
@@ -60,46 +60,12 @@
       </div>
     </section>
 
-    <section class="overlay" id="overlay">
-      <div class="single-card">
-        <img
-        src=https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png
-        alt="" class="single-img"/>
-
-        <div class="single-circle grass"></div>
-
-        <div class="line"></div>
-
-        <div class="single-description">
-          <h2>Ein Monster</h2>
-          <p>#0815</p>
-          <div class="pokemon-types" id="single_pokemon_types_${id}">
-            <span class="single-type grass">Pflanze</span>
-          </div>
-          <table class="pokemon-details">
-            <tr>
-              <td id="detail_height">Height</td>
-              <td>2 m</td>
-            </tr>
-            <tr>
-              <td id="detail_weight">Weight</td>
-              <td>100 kg</td>
-            </tr>
-            <tr>
-              <td id="detail_experience">Expérience de base</td>
-              <td>263</td>
-            </tr>
-            <tr>
-              <td id="detail_abilities">Abilities</td>
-              <td>overgrow, chlorophyll</td>
-            </tr>
-          </table>
-          <div class="arrows">
-            <img src="./assets/img/arrow-left.png" alt="" class="arrow-img"/>
-            <img src="./assets/img/arrow-right.png" alt="" class="arrow-img"/>
-          </div>
-        </div>
-      </div>
+    <section class="overlay d-none" id="overlay" onclick="toggleOverlay()">
+      <div
+        class="single-card"
+        id="single_card"
+        onclick="bubblingPrevention(event)"
+      ></div>
     </section>
 
     <footer></footer>

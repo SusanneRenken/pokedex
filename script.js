@@ -1,6 +1,5 @@
 let POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
 let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
-let TYPE_URL = "https://pokeapi.co/api/v2/type/";
 let STAT_URL = "https://pokeapi.co/api/v2/stat/";
 
 let allLoadedPokemons = [];
@@ -36,7 +35,7 @@ async function init() {
   await populatePokemonArray(pokemonList);
 
   console.log("allLoadedPokemons:", allLoadedPokemons); //DELETE
-  renderPokemon();
+  renderPokemon(allLoadedPokemons);
   hideLoading();
 }
 
@@ -55,11 +54,11 @@ async function populatePokemonArray(pokemonList) {
       image: pokemonImage,
       types: pokemonTypes,
     });
-  }
+  }  
 }
 
-async function getPokemonNames(Id) {
-  let speciesData = await fetchDataJason(`${SPECIES_URL}${Id}`);
+async function getPokemonNames(id) {
+  let speciesData = await fetchDataJason(`${SPECIES_URL}${id}`);
   let names = {};
 
   for (let language of languages) {
@@ -78,7 +77,7 @@ async function getPokemonTypes(pokemonData) {
 
   for (let type of pokemonData.types) {
     let typeName = type.type.name;
-    const languageTypes = await getlanguageId(type.type.url);
+    const languageTypes = await getTypesNames(type.type.url);
 
     let typeObject = {
       [typeName]: languageTypes,
@@ -90,7 +89,7 @@ async function getPokemonTypes(pokemonData) {
   return pokemonTypes;
 }
 
-async function getlanguageId(url) {
+async function getTypesNames(url) {
   const typeData = await fetchDataJason(url);
   let languageTypes = {};
 
@@ -104,7 +103,11 @@ async function getlanguageId(url) {
   return languageTypes;
 }
 
-function renderPokemon(pokemonToRender = allLoadedPokemons) {
+// async function getPokemonDetails(id){
+
+// }
+
+function renderPokemon(pokemonToRender) {
   let content = document.getElementById("pokemon_cards");
   content.innerHTML = "";
 
@@ -120,24 +123,60 @@ function renderPokemon(pokemonToRender = allLoadedPokemons) {
       id,
       pokemonMainType
     );
-    renderTypes(pokemon);
+    renderTypes("pokemon_types_", pokemon, "type");
   }
 }
 
-function renderTypes(pokemon) {
-  let content = document.getElementById(`pokemon_types_${pokemon.id}`);
+function renderSingleCard(id, open) {
+  let content = document.getElementById("single_card");
+  content.innerHTML = "";
+
+  let selectedPokemon = allLoadedPokemons.find((pokemon) => pokemon.id === id);
+  let image = selectedPokemon.image;
+  let languageName = selectedPokemon.names[language];
+  let pokemonMainType = Object.keys(selectedPokemon.types[0])[0];
+
+  content.innerHTML += pokemonSingleCardHTML(
+    image,
+    languageName,
+    id,
+    pokemonMainType
+  );
+  showArrows(id);
+  renderTypes("single_pokemon_types_", selectedPokemon, "single-type");
+  updateSingleTexts();
+  if (open) {
+    toggleOverlay();
+  };
+}
+
+function showArrows(id) {
+  let arrowLeft = document.getElementById("arrow_left");
+  let arrowRight = document.getElementById("arrow_right");
+  let numberLoadedPokemons = allLoadedPokemons.length;
+
+  if (id == 1) {
+    arrowLeft.classList.add("d-none");  
+  }
+  if (id == numberLoadedPokemons) {
+    arrowRight.classList.add("d-none");  
+  }
+}
+
+function renderTypes(prefix, pokemon, typeclass) {
+  let content = document.getElementById(`${prefix}${pokemon.id}`);
   content.innerHTML = "";
 
   for (let pokemonTypes of pokemon.types) {
     let pokemonType = Object.keys(pokemonTypes)[0];
     let languageType = pokemonTypes[pokemonType][language];
 
-    content.innerHTML += `<span class="type ${pokemonType}">${languageType}</span>`;
+    content.innerHTML += `<span class="${typeclass} ${pokemonType}">${languageType}</span>`;
   }
 }
 
 async function loadMorePokemon() {
-  showLoading()
+  showLoading();
   loadedPokemons += pokemonsPerLoad;
   lastLoadedPokemonCount = loadedPokemons;
   let pokemonList = await fetchDataJason(
@@ -146,24 +185,24 @@ async function loadMorePokemon() {
 
   await populatePokemonArray(pokemonList);
 
-  renderPokemon();
-  hideLoading()
+  renderPokemon(allLoadedPokemons);
+  hideLoading();
 }
 
 function showLoading() {
-  document.querySelector('.loading').style.display = 'flex';
-  document.querySelector('.load-Btn-content').style.display = 'none';
+  document.querySelector(".loading").style.display = "flex";
+  document.querySelector(".load-Btn-content").style.display = "none";
 }
 
 function hideLoading() {
-  document.querySelector('.loading').style.display = 'none';
-  document.querySelector('.load-Btn-content').style.display = 'flex';
+  document.querySelector(".loading").style.display = "none";
+  document.querySelector(".load-Btn-content").style.display = "flex";
 }
 
 function changeLanguage(newLanguage) {
   language = newLanguage;
   updateTexts();
-  renderPokemon();
+  renderPokemon(allLoadedPokemons);
 }
 
 function handleSearch() {
@@ -174,11 +213,13 @@ function handleSearch() {
 
 function searchPokemon(query) {
   if (query.length === 0) return allLoadedPokemons;
-  
+
   query = query.toLowerCase().trim();
   const isNumeric = /^\d+$/.test(query);
-  
-  return allLoadedPokemons.filter(pokemon => filterPokemon(pokemon, query, isNumeric));
+
+  return allLoadedPokemons.filter((pokemon) =>
+    filterPokemon(pokemon, query, isNumeric)
+  );
 }
 
 function filterPokemon(pokemon, query, isNumeric) {
@@ -196,13 +237,15 @@ function searchById(pokemon, query) {
 
 function searchByNameOrType(pokemon, query) {
   const nameMatch = pokemon.names[language].toLowerCase().includes(query);
-  
-  const typeMatch = pokemon.types.some(typeObj => {
+
+  const typeMatch = pokemon.types.some((typeObj) => {
     const typeName = Object.keys(typeObj)[0];
-    return typeName.toLowerCase().includes(query) ||
-           typeObj[typeName][language].toLowerCase().includes(query);
+    return (
+      typeName.toLowerCase().includes(query) ||
+      typeObj[typeName][language].toLowerCase().includes(query)
+    );
   });
-  
+
   return nameMatch || typeMatch;
 }
 
@@ -222,7 +265,33 @@ function updateTexts() {
   languageSelect.value = language;
 }
 
-function toggleOverlay(){
-  let refOverlay = document.getElementById('overlay')
-  refOverlay.classList.toggle('d-none')
+function updateSingleTexts() {
+  const currentTranslation = translations[language] || translations["en"];
+
+  const height = document.getElementById("detail_height");
+  height.textContent = currentTranslation.detailHeight;
+
+  const weight = document.getElementById("detail_weight");
+  weight.textContent = currentTranslation.detailWeight;
+
+  const experience = document.getElementById("detail_experience");
+  experience.textContent = currentTranslation.detailExperience;
+
+  const abilities = document.getElementById("detail_abilities");
+  abilities.textContent = currentTranslation.detailAbilities;
+}
+
+function toggleOverlay() {
+  let refOverlay = document.getElementById("overlay");
+  refOverlay.classList.toggle("d-none");
+
+  if (!refOverlay.classList.contains("d-none")) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+}
+
+function bubblingPrevention(event) {
+  event.stopPropagation();
 }
