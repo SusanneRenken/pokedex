@@ -14,7 +14,12 @@ function pokemonCardHTML(image, name, id, type) {
 
     </div>`;
 }
-function pokemonSingleCardHTML(image, name, id, type) {
+
+function pokemonSingleCardHTML(image, name, id, type, detailedData) {
+  const abilitiesInCurrentLanguage = detailedData.abilities
+    .map((ability) => ability[language])
+    .join(", <br>");
+
   return `
         <img
         src=${image}
@@ -30,27 +35,31 @@ function pokemonSingleCardHTML(image, name, id, type) {
           <div class="pokemon-types" id="single_pokemon_types_${id}">
           </div>
           <table class="pokemon-details">
-            <tr>
-              <td id="detail_height">Height</td>
-              <td>2 m</td>
-            </tr>
-            <tr>
-              <td id="detail_weight">Weight</td>
-              <td>100 kg</td>
-            </tr>
-            <tr>
-              <td id="detail_experience">Expérience de base</td>
-              <td>263</td>
-            </tr>
-            <tr>
-              <td id="detail_abilities">Abilities</td>
-              <td>overgrow, chlorophyll</td>
-            </tr>
-          </table>
+          <tr>
+            <td id="detail_height">Height</td>
+            <td>${detailedData.height} m</td>
+          </tr>
+          <tr>
+            <td id="detail_weight">Weight</td>
+            <td>${detailedData.weight} kg</td>
+          </tr>
+          <tr>
+            <td id="detail_experience">Base experience</td>
+            <td>${detailedData.baseExperience}</td>
+          </tr>
+          <tr>
+            <td id="detail_abilities">Abilities</td>
+            <td>${abilitiesInCurrentLanguage}</td>
+          </tr>
+        </table>
           <div class="arrows">
-            <img src="./assets/img/arrow-left.png" alt="" class="arrow-img" id="arrow_left" onclick="renderSingleCard(${id-1}, false)"/>
+            <img src="./assets/img/arrow-left.png" alt="" class="arrow-img" id="arrow_left" onclick="renderSingleCard(${
+              id - 1
+            }, false)"/>
             <div></div>
-            <img src="./assets/img/arrow-right.png" alt="" class="arrow-img" id="arrow_right" onclick="renderSingleCard(${id+1}, false)"/>
+            <img src="./assets/img/arrow-right.png" alt="" class="arrow-img" id="arrow_right" onclick="renderSingleCard(${
+              id + 1
+            }, false)"/>
           </div>
       </div>`;
 }

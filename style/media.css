@@ -41,14 +41,23 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 715px) {
   header {
     height: 180px;
     gap: 16px;
   }
 
   h1 {
-    font-size: 48px;
+    font-size: 36px;
+  }
+
+  .headline{
+    gap: 24px;
+  }
+  
+  .headline img{
+    height: 32px;
+    width: 32px;
   }
 
   .content {
@@ -69,7 +78,7 @@
   }
 
   h1 {
-    font-size: 36px;
+    font-size: 28px;
   }
 
   .content {
@@ -84,23 +93,25 @@
     height: 32px;
     padding: 4px 16px;
   }
-  
+
   .searchBox button {
     height: 32px;
   }
 
-  #language_select{
+  #language_select {
     height: 32px;
   }
 
   .single-card {
     width: 280px;
-    height: 425px;
+    height: 465px;
+    box-shadow: 8px 8px 6px rgba(255, 255, 255, 0.2) inset,
+      0px 0px 20px rgb(224, 224, 224), -8px -8px 10px rgb(17, 17, 17) inset;
   }
 
   .single-description {
-    height: 250px;
-    /* padding: 16px 0px 0px 0px; */
+    height: 290px;
+    padding: 16px 12px 12px 0px;
   }
 
   .pokemon-details td {
@@ -108,7 +119,11 @@
     font-size: 14px;
   }
 
-  .arrow-img{
+  .pokemon-details td:first-child {
+    width: 130px;
+  }
+
+  .arrow-img {
     height: 24px;
     width: 24px;
   }

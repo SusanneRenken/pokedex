@@ -23,18 +23,14 @@ async function fetchDataJason(apiUrl) {
 }
 
 async function init() {
-  console.log("API Pokémons:"); //DELETE
   showLoading();
 
   const pokemonList = await fetchDataJason(
     `https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerLoad}&offset=${loadedPokemons}`
   );
 
-  console.log("API Pokémons:", pokemonList); //DELETE
-
   await populatePokemonArray(pokemonList);
 
-  console.log("allLoadedPokemons:", allLoadedPokemons); //DELETE
   renderPokemon(allLoadedPokemons);
   hideLoading();
 }
@@ -44,7 +40,6 @@ async function populatePokemonArray(pokemonList) {
     let pokemonData = await fetchDataJason(pokemon.url);
     let pokemonId = pokemonData.id;
     let pokemonImage = pokemonData.sprites.other["home"].front_default;
-
     let pokemonNames = await getPokemonNames(pokemonId);
     let pokemonTypes = await getPokemonTypes(pokemonData);
 
@@ -54,7 +49,7 @@ async function populatePokemonArray(pokemonList) {
       image: pokemonImage,
       types: pokemonTypes,
     });
-  }  
+  }
 }
 
 async function getPokemonNames(id) {
@@ -65,7 +60,6 @@ async function getPokemonNames(id) {
     let languageName =
       speciesData.names.find((name) => name.language.name === language)?.name ||
       "Unknown";
-
     names[language] = languageName;
   }
 
@@ -78,14 +72,11 @@ async function getPokemonTypes(pokemonData) {
   for (let type of pokemonData.types) {
     let typeName = type.type.name;
     const languageTypes = await getTypesNames(type.type.url);
-
     let typeObject = {
       [typeName]: languageTypes,
     };
-
     pokemonTypes.push(typeObject);
   }
-
   return pokemonTypes;
 }
 
@@ -103,9 +94,39 @@ async function getTypesNames(url) {
   return languageTypes;
 }
 
-// async function getPokemonDetails(id){
+async function getPokemonDetails(id) {
+  try {
+    const pokemonData = await fetchDataJason(`${POKEMON_URL}${id}`);
+    const abilities = await getTranslatedAbilities(pokemonData.abilities);
 
-// }
+    return {
+      height: pokemonData.height / 10,
+      weight: pokemonData.weight / 10,
+      baseExperience: pokemonData.base_experience,
+      abilities: abilities,
+    };
+  } catch (error) {
+    console.error("Fehler beim Laden der detaillierten Pokémon-Daten:", error);
+    return null;
+  }
+}
+
+async function getTranslatedAbilities(abilitiesData) {
+  return Promise.all(
+    abilitiesData.map(async (abilityData) => {
+      const abilityDetails = await fetchDataJason(abilityData.ability.url);
+      let abilityNames = {};
+
+      for (let lang of languages) {
+        abilityNames[lang] =
+          abilityDetails.names.find((name) => name.language.name === lang)
+            ?.name || abilityDetails.name;
+      }
+
+      return abilityNames;
+    })
+  );
+}
 
 function renderPokemon(pokemonToRender) {
   let content = document.getElementById("pokemon_cards");
@@ -127,27 +148,46 @@ function renderPokemon(pokemonToRender) {
   }
 }
 
-function renderSingleCard(id, open) {
-  let content = document.getElementById("single_card");
+async function renderSingleCard(id, open) {
+  const content = document.getElementById("single_card");
   content.innerHTML = "";
 
-  let selectedPokemon = allLoadedPokemons.find((pokemon) => pokemon.id === id);
-  let image = selectedPokemon.image;
-  let languageName = selectedPokemon.names[language];
-  let pokemonMainType = Object.keys(selectedPokemon.types[0])[0];
+  const cardData = await prepareSingleCardData(id);
+  renderCardContent(content, cardData);
 
-  content.innerHTML += pokemonSingleCardHTML(
-    image,
-    languageName,
-    id,
-    pokemonMainType
-  );
   showArrows(id);
-  renderTypes("single_pokemon_types_", selectedPokemon, "single-type");
+  renderTypes("single_pokemon_types_", cardData.selectedPokemon, "single-type");
   updateSingleTexts();
+
   if (open) {
     toggleOverlay();
+  }
+}
+
+async function prepareSingleCardData(id) {
+  const selectedPokemon = allLoadedPokemons.find(
+    (pokemon) => pokemon.id === id
+  );
+  const detailedData = await getPokemonDetails(id);
+
+  return {
+    selectedPokemon,
+    image: selectedPokemon.image,
+    languageName: selectedPokemon.names[language],
+    pokemonMainType: Object.keys(selectedPokemon.types[0])[0],
+    detailedData,
+    id,
   };
+}
+
+function renderCardContent(content, cardData) {
+  content.innerHTML += pokemonSingleCardHTML(
+    cardData.image,
+    cardData.languageName,
+    cardData.id,
+    cardData.pokemonMainType,
+    cardData.detailedData
+  );
 }
 
 function showArrows(id) {
@@ -156,10 +196,10 @@ function showArrows(id) {
   let numberLoadedPokemons = allLoadedPokemons.length;
 
   if (id == 1) {
-    arrowLeft.classList.add("d-none");  
+    arrowLeft.classList.add("d-none");
   }
   if (id == numberLoadedPokemons) {
-    arrowRight.classList.add("d-none");  
+    arrowRight.classList.add("d-none");
   }
 }
 
@@ -184,7 +224,6 @@ async function loadMorePokemon() {
   );
 
   await populatePokemonArray(pokemonList);
-
   renderPokemon(allLoadedPokemons);
   hideLoading();
 }

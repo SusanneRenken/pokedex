@@ -12,7 +12,7 @@ body {
   font-family: "Livvic", normal;
   height: 100%;
   background-color: rgb(32, 32, 32);
-  cursor: url('../assets/img/mouse-pointer.png'), auto;
+  cursor: url("../assets/img/mouse-pointer.png"), auto;
 }
 
 header {
@@ -29,15 +29,20 @@ header {
 footer {
   height: 40px;
   margin-top: 24px;
-  background-image: linear-gradient(to top, rgba(61, 125, 202, 0.3), rgb(32, 32, 32));
+  background-image: linear-gradient(
+    to top,
+    rgba(61, 125, 202, 0.3),
+    rgb(32, 32, 32)
+  );
 }
 
 h1 {
-  color: rgba(61, 125, 202, 0.45);
+  text-align:center;
+  color: rgba(232, 88, 88, 0.568);
   font-size: 64px;
   font-weight: 900;
-  text-shadow: 2px 2px 4px rgb(0, 0, 0), -0px -0px 4px rgba(255, 255, 255, 0.3);
-  -webkit-text-stroke: 0.5px rgba(61, 125, 202, 0.8);
+  text-shadow: 2px 2px 4px rgb(0, 0, 0), -0px -0px 4px rgba(255, 255, 255, 0.5);
+  -webkit-text-stroke: 0.5px rgba(226, 57, 57, 0.8);
 }
 
 h2 {
@@ -52,6 +57,20 @@ a {
   padding: 80px;
 }
 
+.headline{
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+}
+
+.headline img{
+  height: 72px;
+  width: 72px;
+  object-fit: contain;
+}
+
 .content {
   max-width: 1440px;
   min-height: calc(100vh - 224px);
@@ -63,7 +82,7 @@ a {
   gap: 32px;
 }
 
-.overlay{
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
