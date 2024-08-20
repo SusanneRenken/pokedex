@@ -76,6 +76,10 @@
     padding-top: 16px;
   }
 
+  .pokemon-cards {
+    gap: 24px;
+  }
+
   .searchBox input {
     height: 32px;
     padding: 4px 16px;
@@ -87,5 +91,25 @@
 
   #language_select{
     height: 32px;
+  }
+
+  .single-card {
+    width: 280px;
+    height: 425px;
+  }
+
+  .single-description {
+    height: 250px;
+    /* padding: 16px 0px 0px 0px; */
+  }
+
+  .pokemon-details td {
+    padding: 2px 2px;
+    font-size: 14px;
+  }
+
+  .arrow-img{
+    height: 24px;
+    width: 24px;
   }
 }
