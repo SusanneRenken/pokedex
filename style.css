@@ -6,7 +6,7 @@
 }
 
 .pokemon-card {
-  cursor: url("./assets/img/mouse-highlight.png"), auto;
+  cursor: url("./assets/img/mouse-pointer.png"), auto;
   position: relative;
   width: 240px;
   height: 280px;
