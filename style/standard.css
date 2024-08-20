@@ -38,11 +38,11 @@ footer {
 
 h1 {
   text-align:center;
-  color: rgba(232, 88, 88, 0.568);
+  color: rgba(61, 125, 202, 0.45);
   font-size: 64px;
   font-weight: 900;
-  text-shadow: 2px 2px 4px rgb(0, 0, 0), -0px -0px 4px rgba(255, 255, 255, 0.5);
-  -webkit-text-stroke: 0.5px rgba(226, 57, 57, 0.8);
+  text-shadow: 2px 2px 4px rgb(0, 0, 0), -0px -0px 4px rgba(255, 255, 255, 0.3);
+  -webkit-text-stroke: 0.5px rgba(61, 125, 202, 0.8);
 }
 
 h2 {
